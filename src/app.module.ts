@@ -6,6 +6,7 @@ import { createKeyv } from '@keyv/redis';
 import { Keyv } from 'keyv';
 import { CacheableMemory } from 'cacheable';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ScoreModule } from './modules/scores/scores.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CacheModule } from '@nestjs/cache-manager';
       },
     }),
     AuthModule,
+    ScoreModule
   ],
   controllers: [],
   providers: [],

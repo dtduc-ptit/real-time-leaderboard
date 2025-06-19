@@ -1,5 +1,6 @@
 import { IsNotEmpty, MinLength} from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Score } from '../../scores/entitis/scores.entity'
 
 @Entity()
 export class User {
@@ -17,4 +18,7 @@ export class User {
   @Column()
   @IsNotEmpty()
   name: string;
+
+  @OneToMany(() => Score, (score) => score.user)
+	scores: Score[];
 }
