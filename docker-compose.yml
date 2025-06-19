@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    command: npm run start:prod
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+      - redis
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mysql_data:
+  redis_data:
