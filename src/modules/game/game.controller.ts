@@ -4,7 +4,7 @@ import { CreateGameDto } from "./dto/create-game.dto";
 import { UpdateGameDto } from "./dto/update-game.sto";
 import { JWTAuthGuard } from "../auth/guards/auth.guard";
 
-@Controller('game')
+@Controller('games')
 @UseGuards(JWTAuthGuard)
 export class GameController{
     constructor ( 
@@ -30,12 +30,12 @@ export class GameController{
         return await this.gameService.findGame(limit, page, name);
     }
 
-    @Patch('id')
+    @Patch(':id')
     async update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto){
         return await this.gameService.updateGame(+id, updateGameDto);
     }
 
-    @Delete('id')
+    @Delete(':id')
     async remove(@Param('id') id: string){
         return await this.gameService.removeGame(+id);
     }
