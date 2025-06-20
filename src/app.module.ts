@@ -7,6 +7,9 @@ import { Keyv } from 'keyv';
 import { CacheableMemory } from 'cacheable';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ScoreModule } from './modules/scores/scores.module';
+import * as dotenv from 'dotenv';
+import { GameModule } from './modules/game/game.module';
+dotenv.config();
 
 @Module({
   imports: [
@@ -16,13 +19,14 @@ import { ScoreModule } from './modules/scores/scores.module';
       useFactory: async () => {
         return {
           stores: [
-            createKeyv('redis://redis:6379'),
+            createKeyv(process.env.REDIS_URL),
           ],
         };
       },
     }),
     AuthModule,
-    ScoreModule
+    ScoreModule,
+    GameModule,
   ],
   controllers: [],
   providers: [],
