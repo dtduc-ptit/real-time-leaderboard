@@ -36,4 +36,19 @@ export class RedisService {
     async getAllKeys(key: string) {
         return this.client.keys(key);
     }
+
+    async getAllLeaderboardHighest() {
+        const key = 'leaderboard:game:*';
+
+        const keys = await this.getAllKeys(key);
+
+        const leaderboard: { gameId: string; user: string; score: string }[] = [];
+        
+        for( const i of keys) {
+            const [gameId] = i.split(':').slice(-1);
+            const [user, score] = await this.getTop(key, 1);
+            leaderboard.push({ gameId, user, score });
+        }
+        return leaderboard;
+    }
 }
