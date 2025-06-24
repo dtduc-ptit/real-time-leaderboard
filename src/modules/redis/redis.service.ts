@@ -46,7 +46,7 @@ export class RedisService {
         
         for( const i of keys) {
             const [gameId] = i.split(':').slice(-1);
-            const [user, score] = await this.getTop(key, 1);
+            const [user, score] = await this.getTop(i, 1);
             leaderboard.push({ gameId, user, score });
         }
         return leaderboard;
