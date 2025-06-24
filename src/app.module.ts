@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './modules/config/typeorm.config';
 import { AuthModule } from './modules/auth/auth.module';
@@ -6,6 +6,7 @@ import { ScoreModule } from './modules/scores/scores.module';
 import * as dotenv from 'dotenv';
 import { GameModule } from './modules/game/game.module';
 import { LeaderboardModule } from './modules/leaderboard/leaderboard.module';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 dotenv.config();
 
@@ -20,4 +21,8 @@ dotenv.config();
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
