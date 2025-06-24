@@ -43,8 +43,7 @@ export class ScoresService{
 
     async getTopPlayersReport(
       gameId: number,
-      from: Date,
-      to: Date,
+      date: string,
       top: number
     ) {
       return this.scoreRepository
@@ -60,8 +59,8 @@ export class ScoresService{
         .innerJoin('scores.user', 'user')
         .innerJoin('scores.game', 'game')
         .where('scores.gameId = :gameId', {gameId})
-        .andWhere('score.createdAt BETWEEN :from AND :to', { from, to })
-        .groupBy('score.userId, user.username, game.name')
+        .andWhere('DATE(scores.createdAt) = :date', { date })
+        .groupBy('scores.userId, user.name, game.name')
         .orderBy('totalScore', 'DESC')
         .limit(top)
         .getRawMany();

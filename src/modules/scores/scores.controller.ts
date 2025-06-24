@@ -31,13 +31,10 @@ export class ScoresController{
     @Get('report')
     async getTopReport(
         @Query('gameId') gameId: number,
-        @Query('from') from: string,
-        @Query('to') to: string,
+        @Query('date') date: string,
         @Query('top') top: number
     ) {
-        const fromDate = new Date(from);
-        const toDate = new Date(to);
-        return this.scoresService.getTopPlayersReport(gameId, fromDate, toDate, top);
+        return this.scoresService.getTopPlayersReport(gameId, date, top);
     }
 
 }
