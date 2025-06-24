@@ -23,11 +23,6 @@ export class ScoresController{
         return this.scoresService.getUserRank(req.user.sub, gameId);
     }
 
-    @Get('keys')
-    async getKeys() {
-        return this.scoresService.getAllKeys();
-    }
-
     @Get('report')
     async getTopReport(
         @Query('gameId') gameId: number,
